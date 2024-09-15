@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
       child: const MaterialApp(
         home: Scaffold(
           body: Center(
-            child: Placeholder(),
+            child: TodoFilter(),
           ),
         ),
       ),
@@ -38,6 +38,22 @@ class TodoProvider extends InheritedWidget {
 
   static TodoProvider of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<TodoProvider>()!;
+  }
+}
+
+class TodoCreate extends StatefulWidget {
+  const TodoCreate({super.key});
+
+  @override
+  State<TodoCreate> createState() => _TodoCreateState();
+}
+
+class _TodoCreateState extends State<TodoCreate> {
+  @override
+  Widget build(BuildContext context) {
+    final todoRepository = TodoProvider.of(context).todoRepository;
+
+    return const Placeholder();
   }
 }
 
@@ -68,8 +84,26 @@ class _TodoFilterState extends State<TodoFilter> {
   @override
   Widget build(BuildContext context) {
     final todoRepository = TodoProvider.of(context).todoRepository;
-
-    return const Placeholder();
+    var filterList = Filter.values.toList();
+    return Container(
+      width: 327,
+      height: 48,
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [BoxShadow(color: Colors.black, blurRadius: 4)],
+          borderRadius: BorderRadius.all(Radius.circular(5))),
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: filterList.length,
+          itemBuilder: (context, index) {
+            return Row(children: [
+              Text(filterList[index].name),
+              const SizedBox(
+                width: 10,
+              )
+            ]);
+          }),
+    );
   }
 }
 
