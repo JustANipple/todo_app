@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/todo_repository.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,54 +10,66 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Filter(),
+    return TodoProvider(
+      todoRepository: TodoRepository(),
+      child: const MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Placeholder(),
+          ),
         ),
       ),
     );
   }
 }
 
-class Filter extends StatefulWidget {
-  const Filter({super.key});
+class TodoProvider extends InheritedWidget {
+  final TodoRepository todoRepository;
+
+  const TodoProvider({
+    super.key,
+    required this.todoRepository,
+    required super.child,
+  });
 
   @override
-  State<Filter> createState() => _FilterState();
+  bool updateShouldNotify(covariant TodoProvider oldWidget) =>
+      todoRepository != oldWidget.todoRepository;
+
+  static TodoProvider of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<TodoProvider>()!;
+  }
 }
 
-class _FilterState extends State<Filter> {
-  int selectedFilter = 0;
-  final List<String> filters = ["All", "Active", "Completed"];
+class TodoList extends StatefulWidget {
+  const TodoList({super.key});
 
-  void changeFilter(int newFilterIndex) {
-    setState(() {
-      selectedFilter = newFilterIndex;
-    });
-  }
+  @override
+  State<TodoList> createState() => _TodoListState();
+}
 
+class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
-    return IntrinsicWidth(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-        child: Row(
-          children: [
-            for (int i = 0; i < filters.length; i++)
-              TextButton(
-                onPressed: () => changeFilter(i),
-                child: Text(
-                  filters[i],
-                  style: TextStyle(
-                    color: selectedFilter == i ? Colors.blue : Colors.black,
-                  ),
-                ),
-              )
-          ],
-        ),
-      ),
-    );
+    final todoRepository = TodoProvider.of(context).todoRepository;
+
+    return const Placeholder();
+  }
+}
+
+class TodoFilter extends StatefulWidget {
+  const TodoFilter({super.key});
+
+  @override
+  State<TodoFilter> createState() => _TodoFilterState();
+}
+
+class _TodoFilterState extends State<TodoFilter> {
+  @override
+  Widget build(BuildContext context) {
+    final todoRepository = TodoProvider.of(context).todoRepository;
+
+    return const Placeholder();
   }
 }
 
