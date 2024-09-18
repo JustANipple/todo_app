@@ -26,7 +26,9 @@ class TodoRepository {
     ),
   ];
 
-  int _selectedIndex = Filter.all.index;
+  int _selectedIndex = Filter.All.index;
+
+  int get selectedIndex => _selectedIndex;
 
   void changeFilter(int newIndex) {
     _selectedIndex = newIndex;
@@ -74,4 +76,5 @@ class Todo {
   });
 }
 
-enum Filter { all, active, completed }
+// ignore: constant_identifier_names
+enum Filter { All, Active, Completed }
