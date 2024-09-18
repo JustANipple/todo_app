@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
+import 'package:todo_app/todo_create.dart';
 import 'package:todo_app/todo_filter.dart';
 import 'package:todo_app/todo_repository.dart';
 
@@ -16,11 +17,11 @@ class MainApp extends StatelessWidget {
       todoRepository: TodoRepository(),
       child: MaterialApp(
         theme: lightTheme,
-        darkTheme: darkTheme,
+        // darkTheme: darkTheme,
         themeMode: ThemeMode.system,
         home: const Scaffold(
           body: Center(
-            child: TodoFilter(),
+            child: TodoCreate(),
           ),
         ),
       ),
@@ -43,22 +44,6 @@ class TodoProvider extends InheritedWidget {
 
   static TodoProvider of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<TodoProvider>()!;
-  }
-}
-
-class TodoCreate extends StatefulWidget {
-  const TodoCreate({super.key});
-
-  @override
-  State<TodoCreate> createState() => _TodoCreateState();
-}
-
-class _TodoCreateState extends State<TodoCreate> {
-  @override
-  Widget build(BuildContext context) {
-    final todoRepository = TodoProvider.of(context).todoRepository;
-
-    return const Placeholder();
   }
 }
 
