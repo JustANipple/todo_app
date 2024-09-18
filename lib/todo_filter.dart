@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/main.dart';
-import 'package:todo_app/themes.dart';
 import 'todo_repository.dart';
 
 class TodoFilter extends StatefulWidget {
@@ -17,7 +16,7 @@ class _TodoFilterState extends State<TodoFilter> {
     List<Filter> filterList = Filter.values.toList();
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).colorScheme.shadow,
@@ -48,12 +47,15 @@ class _TodoFilterState extends State<TodoFilter> {
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       color: index == todoRepository.selectedIndex
-                          ? const Color.fromRGBO(58, 123, 253, 1)
-                          : const Color.fromRGBO(147, 148, 165, 1),
+                          ? Theme.of(context).colorScheme.onSecondaryFixed
+                          : Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
                 ),
-                if (index < filterList.length - 1) const SizedBox(width: 19),
+                if (index < filterList.length - 1)
+                  const SizedBox(
+                    width: 19,
+                  ),
               ]);
             }),
       ),

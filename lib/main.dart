@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/todo_filter.dart';
 import 'package:todo_app/todo_repository.dart';
@@ -18,6 +17,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         theme: lightTheme,
         darkTheme: darkTheme,
+        themeMode: ThemeMode.system,
         home: const Scaffold(
           body: Center(
             child: TodoFilter(),
