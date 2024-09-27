@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/todo_create.dart';
-import 'package:todo_app/todo_filter.dart';
 import 'package:todo_app/todo_repository.dart';
 
 void main() {
