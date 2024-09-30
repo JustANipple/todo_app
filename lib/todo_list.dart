@@ -65,7 +65,6 @@ class _TodoListState extends State<TodoList> {
                         ),
                       ),
                       Container(
-                        constraints: BoxConstraints: ,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Text(
@@ -79,7 +78,8 @@ class _TodoListState extends State<TodoList> {
                                   decoration: todoRepository.isCompleted(index)
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none,
-                                  color: Theme.of(context).colorScheme.onPrimary,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
                                 ),
                           ),
                         ),
