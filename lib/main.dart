@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:todo_app/themes.dart';
-import 'package:todo_app/todo_create.dart';
+import 'package:todo_app/todo_list.dart';
 import 'package:todo_app/todo_repository.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MainApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         home: const Scaffold(
           body: Center(
-            child: TodoCreate(),
+            child: TodoList(),
           ),
         ),
       ),
@@ -45,31 +46,3 @@ class TodoProvider extends InheritedWidget {
     return context.dependOnInheritedWidgetOfExactType<TodoProvider>()!;
   }
 }
-
-class TodoList extends StatefulWidget {
-  const TodoList({super.key});
-
-  @override
-  State<TodoList> createState() => _TodoListState();
-}
-
-class _TodoListState extends State<TodoList> {
-  @override
-  Widget build(BuildContext context) {
-    final todoRepository = TodoProvider.of(context).todoRepository;
-
-    return const Placeholder();
-  }
-}
-
-/*
-  <!-- Add dynamic number --> items left
-
-  All
-  Active 
-  Completed
-
-  Clear Completed
-
-  Drag and drop to reorder list
-*/

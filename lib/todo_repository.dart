@@ -24,6 +24,10 @@ class TodoRepository {
       description: "Complete Todo App on Frontend Mentor",
       completed: false,
     ),
+    Todo(
+      description: "Complete Todo App on Frontend Mentor Mentor Mentor Mentor",
+      completed: false,
+    ),
   ];
 
   int _selectedIndex = Filter.All.index;
@@ -64,6 +68,14 @@ class TodoRepository {
 
   void deleteCompletedTodos() {
     _todos.removeWhere((todo) => todo.completed);
+  }
+
+  bool isCompleted(index) {
+    return _todos[index].completed;
+  }
+
+  int getTodosLeft() {
+    return _todos.where((todo) => !todo.completed).length;
   }
 }
 
