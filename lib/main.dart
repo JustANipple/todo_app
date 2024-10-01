@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:todo_app/responsive_container.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/todo_list.dart';
 import 'package:todo_app/todo_repository.dart';
@@ -21,7 +21,9 @@ class MainApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         home: const Scaffold(
           body: Center(
-            child: TodoList(),
+            child: ResponsiveContainer(
+              child: TodoList(),
+            ),
           ),
         ),
       ),
