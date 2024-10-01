@@ -24,10 +24,6 @@ class TodoRepository {
       description: "Complete Todo App on Frontend Mentor",
       completed: false,
     ),
-    Todo(
-      description: "Complete Todo App on Frontend Mentor Mentor Mentor Mentor",
-      completed: false,
-    ),
   ];
 
   int _selectedIndex = Filter.All.index;

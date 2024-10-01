@@ -12,9 +12,8 @@ class ResponsiveContainer extends StatelessWidget {
           constraints.maxWidth > 327 ? 327 : constraints.maxWidth;
       return Container(
         constraints: BoxConstraints(maxWidth: containerWidth),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
         child: child,
       );
