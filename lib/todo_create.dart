@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/main.dart';
-import 'package:todo_app/todo_repository.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/todo_provider.dart';
 
 class TodoCreate extends StatefulWidget {
   const TodoCreate({super.key});
@@ -14,8 +14,8 @@ class _TodoCreateState extends State<TodoCreate> {
   final TextEditingController _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final todoRepository = TodoProvider.of(context).todoRepository;
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
         boxShadow: [
@@ -31,38 +31,38 @@ class _TodoCreateState extends State<TodoCreate> {
       child: Form(
         key: _formKey,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(
-                  Colors.transparent,
+            Container(
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  width: .25,
                 ),
-                shadowColor: WidgetStateProperty.all(Colors.transparent),
-                shape: WidgetStateProperty.all(
-                  CircleBorder(
-                    side: BorderSide(
-                      width: 1,
-                      color: Theme.of(context).colorScheme.shadow,
-                    ),
-                  ),
-                ),
-                minimumSize: WidgetStateProperty.all(const Size(20, 20)),
+                shape: BoxShape.circle,
               ),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  final todoText = _textController.text.trim();
-                  todoRepository.createTodo(todoText);
-                  setState(() {});
-                }
-              },
-              child: const Text(
-                "",
-                textDirection: TextDirection.ltr,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                ),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    final todoText = _textController.text.trim();
+                    Provider.of<TodoProvider>(context, listen: false)
+                        .addTodo(todoText);
+                  }
+                },
+                child: const Text(
+                  "",
+                  textDirection: TextDirection.ltr,
+                ),
               ),
             ),
-            SizedBox(
-              width: 250,
+            const SizedBox(width: 12),
+            Expanded(
               child: TextFormField(
                 decoration: InputDecoration(
                   hintText: "Create a new todo...",
@@ -75,7 +75,8 @@ class _TodoCreateState extends State<TodoCreate> {
                 onFieldSubmitted: (value) {
                   if (_formKey.currentState!.validate()) {
                     final todoText = _textController.text.trim();
-                    todoRepository.createTodo(todoText);
+                    Provider.of<TodoProvider>(context, listen: false)
+                        .addTodo(todoText);
                   }
                 },
                 controller: _textController,

@@ -38,19 +38,13 @@ class TodoRepository {
     _todos.add(Todo(description: description, completed: false));
   }
 
-  List<String> getTodos() {
+  List<Todo> getTodos() {
     if (_selectedIndex == 0) {
-      return _todos.map((todo) => todo.description).toList();
+      return _todos.toList();
     } else if (_selectedIndex == 1) {
-      return _todos
-          .where((todo) => !todo.completed)
-          .map((todo) => todo.description)
-          .toList();
+      return _todos.where((todo) => !todo.completed).toList();
     } else {
-      return _todos
-          .where((todo) => todo.completed)
-          .map((todo) => todo.description)
-          .toList();
+      return _todos.where((todo) => todo.completed).toList();
     }
   }
 

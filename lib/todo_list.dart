@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/main.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/todo_provider.dart';
 import 'package:todo_app/todo_repository.dart';
 
 class TodoList extends StatefulWidget {
@@ -12,11 +13,8 @@ class TodoList extends StatefulWidget {
 class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
-    final TodoRepository todoRepository =
-        TodoProvider.of(context).todoRepository;
-    final List<String> todoList = todoRepository.getTodos();
-    final todosLeft = todoRepository.getTodosLeft();
-
+    final List<Todo> todoList = Provider.of<TodoProvider>(context).getTodos();
+    int todosLeft = Provider.of<TodoProvider>(context).getTodosLeft();
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -38,7 +36,8 @@ class _TodoListState extends State<TodoList> {
                   decoration: BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
-                        color: Theme.of(context).colorScheme.shadow,
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        width: .25,
                       ),
                     ),
                   ),
@@ -49,11 +48,13 @@ class _TodoListState extends State<TodoList> {
                         child: Row(
                           children: [
                             Container(
-                              width: 22,
-                              height: 22,
+                              width: 20,
+                              height: 20,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                gradient: todoRepository.isCompleted(index)
+                                gradient: Provider.of<TodoProvider>(context)
+                                        .getTodo(index)
+                                        .completed
                                     ? LinearGradient(
                                         colors: [
                                             Theme.of(context)
@@ -67,7 +68,9 @@ class _TodoListState extends State<TodoList> {
                                         end: Alignment.bottomRight)
                                     : null,
                                 border: Border.all(
-                                  color: Theme.of(context).colorScheme.shadow,
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
+                                  width: .25,
                                 ),
                               ),
                               child: FittedBox(
@@ -77,12 +80,16 @@ class _TodoListState extends State<TodoList> {
                                     shadowColor: Colors.transparent,
                                   ),
                                   onPressed: () {
-                                    todoRepository.toggleTodo(index);
+                                    Provider.of<TodoProvider>(context,
+                                            listen: false)
+                                        .toggleTodo(index);
                                     setState(() {});
                                   },
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.check,
                                     size: 70,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ),
@@ -93,22 +100,27 @@ class _TodoListState extends State<TodoList> {
                                 scrollDirection: Axis.horizontal,
                                 child: Text(
                                   textAlign: TextAlign.left,
-                                  todoList[index],
+                                  todoList[index].description,
                                   style: Theme.of(context)
                                       .textTheme
                                       .labelSmall!
                                       .copyWith(
                                         decoration:
-                                            todoRepository.isCompleted(index)
+                                            Provider.of<TodoProvider>(context)
+                                                    .getTodo(index)
+                                                    .completed
                                                 ? TextDecoration.lineThrough
                                                 : TextDecoration.none,
-                                        color: todoRepository.isCompleted(index)
-                                            ? Theme.of(context)
-                                                .colorScheme
-                                                .onTertiary
-                                            : Theme.of(context)
-                                                .colorScheme
-                                                .onPrimary,
+                                        color:
+                                            Provider.of<TodoProvider>(context)
+                                                    .getTodo(index)
+                                                    .completed
+                                                ? Theme.of(context)
+                                                    .colorScheme
+                                                    .onTertiary
+                                                : Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary,
                                       ),
                                 ),
                               ),
@@ -117,11 +129,14 @@ class _TodoListState extends State<TodoList> {
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.close),
-                        color: Theme.of(context).colorScheme.shadow,
+                        icon: const Icon(
+                          Icons.close,
+                          size: 20,
+                        ),
+                        color: Theme.of(context).colorScheme.onSecondary,
                         onPressed: () {
-                          todoRepository.deleteTodo(index);
-                          setState(() {});
+                          Provider.of<TodoProvider>(context, listen: false)
+                              .deleteTodo(index);
                         },
                       ),
                     ],
@@ -153,8 +168,8 @@ class _TodoListState extends State<TodoList> {
                     ),
                   ),
                   onPressed: () {
-                    todoRepository.deleteCompletedTodos();
-                    setState(() {});
+                    Provider.of<TodoProvider>(context, listen: false)
+                        .deleteCompletedTodos();
                   },
                   child: Text(
                     "Clear completed",

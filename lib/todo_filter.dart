@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/main.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/todo_provider.dart';
 import 'todo_repository.dart';
 
 class TodoFilter extends StatefulWidget {
@@ -12,7 +13,6 @@ class TodoFilter extends StatefulWidget {
 class _TodoFilterState extends State<TodoFilter> {
   @override
   Widget build(BuildContext context) {
-    final todoRepository = TodoProvider.of(context).todoRepository;
     List<Filter> filterList = Filter.values.toList();
     return Container(
       decoration: BoxDecoration(
@@ -40,13 +40,17 @@ class _TodoFilterState extends State<TodoFilter> {
               return Row(children: [
                 GestureDetector(
                   onTap: () {
-                    setState(() => todoRepository.changeFilter(index));
+                    setState(() =>
+                        Provider.of<TodoProvider>(context, listen: false)
+                            .changeFilter(index));
                   },
                   child: Text(
                     filterList[index].name,
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      color: index == todoRepository.selectedIndex
+                      color: index ==
+                              Provider.of<TodoProvider>(context)
+                                  .getSelectedIndex()
                           ? Theme.of(context).colorScheme.onSecondaryFixed
                           : Theme.of(context).colorScheme.onSecondary,
                     ),
