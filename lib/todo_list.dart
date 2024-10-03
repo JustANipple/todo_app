@@ -27,7 +27,6 @@ class _TodoListState extends State<TodoList> {
         children: [
           Expanded(
             child: ListView.builder(
-              shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemCount: todoList.length,
               itemBuilder: (context, index) {

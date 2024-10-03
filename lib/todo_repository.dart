@@ -35,7 +35,7 @@ class TodoRepository {
   }
 
   void createTodo(String description) {
-    _todos.add(Todo(description: description, completed: false));
+    _todos.insert(0, Todo(description: description, completed: false));
   }
 
   List<Todo> getTodos() {
