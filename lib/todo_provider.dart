@@ -8,6 +8,8 @@ class TodoProvider with ChangeNotifier {
 
   TodoRepository get todoRepository => _todoRepository;
 
+  ThemeMode themeMode = ThemeMode.light;
+
   void addTodo(String text) {
     _todoRepository.createTodo(text);
     notifyListeners();
@@ -47,5 +49,19 @@ class TodoProvider with ChangeNotifier {
 
   int getSelectedIndex() {
     return _todoRepository.selectedIndex;
+  }
+
+  void reorderTodo(int oldIndex, int newIndex) {
+    _todoRepository.reorderTodo(oldIndex, newIndex);
+    notifyListeners();
+  }
+
+  void changeTheme() {
+    if (themeMode == ThemeMode.light) {
+      themeMode = ThemeMode.dark;
+    } else {
+      themeMode = ThemeMode.light;
+    }
+    notifyListeners();
   }
 }

@@ -67,6 +67,11 @@ class TodoRepository {
   int getTodosLeft() {
     return _todos.where((todo) => !todo.completed).length;
   }
+
+  void reorderTodo(int oldIndex, int newIndex) {
+    final Todo item = _todos.removeAt(oldIndex);
+    _todos.insert(newIndex, item);
+  }
 }
 
 class Todo {

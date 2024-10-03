@@ -53,6 +53,7 @@ class _TodoCreateState extends State<TodoCreate> {
                     final todoText = _textController.text.trim();
                     Provider.of<TodoProvider>(context, listen: false)
                         .addTodo(todoText);
+                    _textController.clear();
                   }
                 },
                 child: const Text(
