@@ -32,7 +32,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./assets/design/mobile-design-light.jpg)
+![](./assets/design/mobile_solution_light.png)
 ![](./assets/design/mobile_solution_dark.png)
 
 ### Links
